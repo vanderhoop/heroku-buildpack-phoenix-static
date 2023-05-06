@@ -89,13 +89,8 @@ install_npm() {
 install_yarn() {
   local dir="$1"
 
-  if [ ! $yarn_version ] || is_yarn2_configured; then
-    echo "Downloading and installing yarn lastest..."
-    local download_url="https://yarnpkg.com/latest.tar.gz"
-  else
-    echo "Downloading and installing yarn $yarn_version..."
-    local download_url="https://yarnpkg.com/downloads/$yarn_version/yarn-v$yarn_version.tar.gz"
-  fi
+  echo "Downloading and installing yarn lastest..."
+  local download_url="https://yarnpkg.com/latest.tar.gz"
 
   local code=$(curl "$download_url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/yarn.tar.gz --write-out "%{http_code}")
   if [ "$code" != "200" ]; then
@@ -111,11 +106,9 @@ install_yarn() {
   fi
   chmod +x $dir/bin/*
   PATH=$dir/bin:$PATH
-  echo "Installed yarn $(yarn --version)"
 
-  if is_yarn2_configured; then
-    yarn set version berry
-  fi
+  yarn set version berry
+  echo "Installed yarn $(yarn --version)"
 }
 
 install_and_cache_deps() {
@@ -150,7 +143,7 @@ install_npm_deps() {
 }
 
 install_yarn_deps() {
-  yarn install --check-files --cache-folder $cache_dir/yarn-cache --pure-lockfile 2>&1
+  yarn install --check-files 2>&1
 }
 
 install_bower_deps() {
@@ -234,18 +227,4 @@ remove_node() {
   info "Removing node and node_modules"
   rm -rf $assets_dir/node_modules
   rm -rf $heroku_dir/node
-}
-
-is_yarn2_configured() {
-  if [ ! $yarn_version ]; then
-    return $(false)
-  else
-    local regex='[^0-9]*\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)\([0-9A-Za-z-]*\)'
-    local major_version=`echo $yarn_version | sed -e "s#$regex#\1#"`
-    if [ $major_version -ge 2 ]; then
-      return $(true)
-    else
-      return $(false)
-    fi
-  fi
 }
