@@ -1,4 +1,4 @@
-yarn deploy
+mix assets.deploy
 
 cd $phoenix_dir
 
