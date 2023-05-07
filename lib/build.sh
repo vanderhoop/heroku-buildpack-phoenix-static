@@ -116,8 +116,11 @@ install_and_cache_deps() {
 
   if [ -d $cache_dir/node_modules ]; then
     info "Loading node modules from cache"
-    mkdir node_modules
+    mkdir -p node_modules
+    mkdir -p .yarn
+    mkdir -p .yarn/cache
     cp -R $cache_dir/node_modules/* node_modules/
+    cp -R $cache_dir/.yarn/cache/* .yarn/cache/
   else
     info "NO node_modules FOUND IN CACHE"
   fi
@@ -126,7 +129,7 @@ install_and_cache_deps() {
   install_yarn_deps
 
   info "Caching node modules"
-  cp -R node_modules $cache_dir
+  cp -R .yarn/cache $cache_dir/.yarn
 
   PATH=$assets_dir/node_modules/.bin:$PATH
 
