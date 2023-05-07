@@ -143,7 +143,7 @@ install_npm_deps() {
 }
 
 install_yarn_deps() {
-  yarn install 2>&1
+  yarn install > /dev/null
 }
 
 install_bower_deps() {
