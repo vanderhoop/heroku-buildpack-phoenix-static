@@ -39,7 +39,6 @@ install_npm
 install_yarn "$heroku_dir/yarn"
 
 head "Building dependencies"
-yarn set version berry
 install_and_cache_deps
 
 compile
