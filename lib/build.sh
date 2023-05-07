@@ -143,7 +143,7 @@ install_npm_deps() {
 }
 
 install_yarn_deps() {
-  yarn install --production > /dev/null
+  yarn install --production --frozen-lockfile > /dev/null
 }
 
 install_bower_deps() {
