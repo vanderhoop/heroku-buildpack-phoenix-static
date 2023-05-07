@@ -132,7 +132,7 @@ install_and_cache_deps() {
 }
 
 install_yarn_deps() {
-  yarn install > /dev/null
+  yarn install
 }
 
 install_bower_deps() {
