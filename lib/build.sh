@@ -118,6 +118,8 @@ install_and_cache_deps() {
     info "Loading node modules from cache"
     mkdir node_modules
     cp -R $cache_dir/node_modules/* node_modules/
+  else
+    info "NO node_modules FOUND IN CACHE"
   fi
 
   info "Installing node modules"
